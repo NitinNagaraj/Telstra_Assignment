@@ -17,12 +17,13 @@ public class ReverseWordsController {
 
 	@Autowired
 	private ReverseWordsService reverseWordsService;
-	
+
+	// This project accepts a String variable and returns a reversed string
+
 	@RequestMapping(value = "/ReverseWords", method = RequestMethod.GET)
-	public ResponseEntity<String> reverseWords(@RequestParam("sentence")  String sentence) {
-		return ResponseEntity.status(HttpStatus.OK)
-                .cacheControl(CacheControl.noCache()).header("Pragma", "no-cache")
-                .body(reverseWordsService.reverseWords(sentence));
+	public ResponseEntity<String> reverseWords(@RequestParam("sentence") String sentence) {
+		return ResponseEntity.status(HttpStatus.OK).cacheControl(CacheControl.noCache()).header("Pragma", "no-cache")
+				.body(reverseWordsService.reverseWords(sentence));
 	}
-	
+
 }
