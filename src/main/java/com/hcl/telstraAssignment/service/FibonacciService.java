@@ -2,31 +2,27 @@ package com.hcl.telstraAssignment.service;
 
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class FibonacciService {
-	
+
 	/**
 	 * To find the nth Fibonacci number
 	 * 
-	 * @param fib
+	 * @param nthIndexOfFib
 	 * @return nth fibonacci number
+	 * @throws InvalidInputException
 	 */
-	
-	public long getNthFibonacciNumber(long fib) {
-		int num1 = 1;
-		int num2 = 0;
-		
-		if(fib < 0) {
-			throw new IllegalArgumentException ("Wrong input: " + fib);
+
+	public int getNthFibonacciNumber(long nthIndexOfFib) {
+		// taking 2 temporary variables to carry out the operation
+		int tempNum1 = 1;
+		int tempNum2 = 0;
+		for (int i = 0; i <= nthIndexOfFib; i++) {
+			int FibNum = tempNum1 + tempNum2;
+			tempNum1 = tempNum2;
+			tempNum2 = FibNum;
 		}
-		
-		for(int i = 0; i <= fib; i++) {
-			int FibNum = num1 + num2;
-			num1 = num2;
-			num2 = FibNum;
-		}
-		return num1;
+		return tempNum1;
 	}
 
 }
