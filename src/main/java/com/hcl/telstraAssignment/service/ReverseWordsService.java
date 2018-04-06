@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ReverseWordsService {
-	
+
 	public String reverseWords(String sentence) {
+		// temporary variables to hold the reversed String and the words in the
+		// sentence.
 		String reversedString = "";
 		String[] arrayOfWords = sentence.split(" ");
-		if(null != arrayOfWords) {
-			
 		for (String word : arrayOfWords) {
 			String reversedWord = "";
 			for (int i = word.length() - 1; i >= 0; i--) {
@@ -23,13 +23,8 @@ public class ReverseWordsService {
 			}
 			reversedString += reversedWord;
 			reversedString += " ";
-		
 		}
 		return reversedString;
-		}else {
-			throw new IllegalArgumentException ("Wrong input: " + arrayOfWords);
-		}
-		
+
 	}
 }
-	
