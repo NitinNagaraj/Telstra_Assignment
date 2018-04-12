@@ -21,22 +21,19 @@ import com.hcl.telstraAssignment.utils.MakeOneArrayServiceUtil;
 @RestController
 public class MakeOneArrayController {
 
-
 	@Autowired
 	private MakeOneArrayService makeOneArrayService;
 
-	
-	 
-	@RequestMapping(value="/api/makeonearray",method=RequestMethod.POST)
+	@RequestMapping(value = "/api/makeonearray", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Object> makeOneArray(@RequestBody RestRequestModel restRequest) {
-		
-		Map <String,List<Integer>> finalResult = new HashMap<>();
+
+		Map<String, List<Integer>> finalResult = new HashMap<>();
 		MakeOneArrayServiceUtil restResponse = makeOneArrayService.makeOneArray(restRequest);
 		finalResult.put("Array", restResponse.getResultList());
 		return ResponseEntity.status(HttpStatus.OK).cacheControl(CacheControl.noCache()).header("Pragma", "no-cache")
 				.body(finalResult);
-		
+
 	}
-	
+
 }
