@@ -1,5 +1,7 @@
 package com.hcl.telstraAssignment.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +16,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class TriangleTypeService {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(TriangleTypeService.class);
+
 	public String getTriangleType(int sideLength1, int sideLength2, int sideLength3) {
+		LOGGER.info("getTriangleType : Inside the getTriangleType method");
+		// to check for the negative values
+		LOGGER.debug("The value of the side 1, side2 and side3 respectively are :" + sideLength1 + "," + sideLength2
+				+ "and" + sideLength3);
 		// to check if the triangle is equilateral
 		if (sideLength1 == sideLength2 && sideLength2 == sideLength3) {
 			return "Equilateral";
