@@ -1,5 +1,7 @@
 package com.hcl.telstraAssignment.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,9 +14,12 @@ public class FibonacciService {
 	 * @return nth fibonacci number
 	 * @throws InvalidInputException
 	 */
+	private static final Logger LOGGER = LoggerFactory.getLogger(FibonacciService.class);
 
 	public int getNthFibonacciNumber(long nthIndexOfFib) {
+		LOGGER.info("getNthFibonacciNumber: Inside the getNthFibonacciNumber method");
 		// taking 2 temporary variables to carry out the operation
+		LOGGER.debug("The value of the parameter is: " + nthIndexOfFib);
 		int tempNum1 = 1;
 		int tempNum2 = 0;
 		for (int i = 0; i <= nthIndexOfFib; i++) {
