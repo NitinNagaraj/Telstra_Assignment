@@ -1,5 +1,7 @@
 package com.hcl.telstraAssignment.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,20 +13,30 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReverseWordsService {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(ReverseWordsService.class);
+
 	public String reverseWords(String sentence) {
 		// temporary variables to hold the reversed String and the words in the
 		// sentence.
-		String reversedString = "";
+		LOGGER.info("reverseWords: Inside the reverseWords method");
+		StringBuilder reversedString = new StringBuilder();
 		String[] arrayOfWords = sentence.split(" ");
+		LOGGER.debug("The length of the sentence is: " + arrayOfWords.length);
 		for (String word : arrayOfWords) {
-			String reversedWord = "";
-			for (int i = word.length() - 1; i >= 0; i--) {
-				reversedWord += word.charAt(i);
+			StringBuilder reversedWord = new StringBuilder();
+			String punctutations = "!@#$%^&*()_+?.";
+			String last_letter = "";
+			if (punctutations.contains(word.substring(word.length() - 1))) {
+				last_letter = word.substring(word.length() - 1);
+				word = word.replace(word.substring(word.length() - 1), "");
 			}
-			reversedString += reversedWord;
-			reversedString += " ";
+			for (int i = word.length() - 1; i >= 0; i--) {
+				reversedWord.append(word.charAt(i));
+			}
+			reversedString.append(reversedWord).append(last_letter).append(" ");
 		}
-		return reversedString;
+		LOGGER.debug("The length of the reversed sentence is: " + reversedString.length());
+		return reversedString.toString();
 
 	}
 }
