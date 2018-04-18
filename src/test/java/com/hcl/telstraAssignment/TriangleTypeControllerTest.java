@@ -2,7 +2,6 @@ package com.hcl.telstraAssignment;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -10,13 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.CacheControl;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -32,7 +27,7 @@ public class TriangleTypeControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 
-	@Mock
+	@Autowired
 	private TriangleTypeController triangleTypeController;
 
 	@InjectMocks
@@ -47,27 +42,6 @@ public class TriangleTypeControllerTest {
 	public void testSuccessScenario1() throws Exception {
 		mockMvc.perform(get("/api/TriangleType").param("a", "1").param("b", "1").param("c", "1"))
 				.andExpect(status().is(200));
-	}
-
-	@Test
-	public void testTriangleTypePositiveScenarioWhenTriangleIsIsosceles() throws Exception {
-		given(this.triangleTypeController.getTriangleType("2", "1", "1"))
-				.willReturn(ResponseEntity.status(HttpStatus.OK).cacheControl(CacheControl.noCache())
-						.header("Pragma", "no-cache").body("Isosceles"));
-	}
-
-	@Test
-	public void testTriangleTypePositiveScenarioWhenTriangleIsEquilateral() throws Exception {
-		given(this.triangleTypeController.getTriangleType("2", "2", "2"))
-				.willReturn(ResponseEntity.status(HttpStatus.OK).cacheControl(CacheControl.noCache())
-						.header("Pragma", "no-cache").body("Equilateral"));
-	}
-
-	@Test
-	public void testTriangleTypePositiveScenarioWhenTriangleIsScalene() throws Exception {
-		given(this.triangleTypeController.getTriangleType("2", "3", "4"))
-				.willReturn(ResponseEntity.status(HttpStatus.OK).cacheControl(CacheControl.noCache())
-						.header("Pragma", "no-cache").body("Scalene"));
 	}
 
 	@Test
@@ -98,6 +72,41 @@ public class TriangleTypeControllerTest {
 	@Test
 	public void testForTriangleTypeScaleneFailureScenario() {
 		assertNotEquals("Scalene", triangleTypeService.getTriangleType(2, 2, 2));
+	}
+
+	@Test
+	public void testTriangleTypeSCenario1() throws Exception {
+		mockMvc.perform(get("/api/TriangleType").param("a", "1").param("b", "1").param("c", "1"))
+				.andExpect(status().is(200));
+	}
+
+	@Test
+	public void testTriangleTypeExceptionScenario() throws Exception {
+		try {
+			triangleTypeController.getTriangleType(new String("abc"), new String("abc"), new String("abc"));
+		} catch (NumberFormatException e) {
+
+		}
+	}
+
+	@Test
+	public void testTriangleTypeExceptionScenario2() throws Exception {
+		try {
+			mockMvc.perform(get("/api/TriangleType").param("a", "1").param("b", "1").param("c", "12"));
+		} catch (IllegalArgumentException ie) {
+
+		}
+
+	}
+
+	@Test
+	public void testTriangleTypeExceptionScenario3() throws Exception {
+		try {
+			mockMvc.perform(get("/api/TriangleType").param("a", "0").param("b", "0").param("c", "0"));
+		} catch (IllegalArgumentException ie) {
+
+		}
+
 	}
 
 }
