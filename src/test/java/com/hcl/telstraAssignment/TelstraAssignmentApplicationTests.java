@@ -34,7 +34,7 @@ public class TelstraAssignmentApplicationTests {
 
 	@Test
 	public void test() {
-		TelstraAssignmentApplication.main(new String[] { "--spring.main.web-environment=false", });
+		TelstraAssignmentApplication.main(new String[] {});
 	}
 
 }
